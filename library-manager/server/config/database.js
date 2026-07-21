@@ -3,7 +3,8 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const {CLient} = pg;
+const { Client } = pg;
+
 const client = new Client({
     host: process.env.DB_HOST,
     port: process.env.DB_PORT,
@@ -12,7 +13,17 @@ const client = new Client({
     database: process.env.DB_NAME,
 });
 
-client.connect();
+async function database() {
+    try {
+        await client.connect();
+        console.log("Database connected sucessfully");
+    } catch (eror) {
+        console.log("Database connection failde");
+    }
+
+}
+
+database();
 
 export default client;
 
