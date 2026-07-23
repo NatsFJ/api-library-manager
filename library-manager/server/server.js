@@ -5,7 +5,7 @@ app.listen(3000);
 console.log("server is running on port 3000");
 app.use(express.json());
 
-// Get - Cadastrar Livros
+// Get - Buscar Livros
 app.get("/books", async (req, res) => {
     try {
         const result = await client.query("SELECT * FROM books");
@@ -17,7 +17,7 @@ app.get("/books", async (req, res) => {
     }
 });
 
-
+// Post - cadastrar Livros 
 app.post("/books", async (req, res) => {
     const { title, author } = req.body;
     await client.query("INSERT INTO books (title, author) VALUES ($1, $2)", [title, author]);
