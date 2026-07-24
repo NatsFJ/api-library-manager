@@ -37,7 +37,6 @@ app.post("/books", async (req, res) => {
 // Put - Editar Livros
 app.put("/books/:id", async (req, res) => {
   try {
-    z;
     const { id } = req.params;
     const { title, author } = req.body;
     const result = await client.query(
@@ -82,4 +81,9 @@ app.delete("/books/:id", async (req, res) => {
     console.log("Failed to delete book", error);
     res.status(500).json({ mensagem: "Database Error" });
   }
+});
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
