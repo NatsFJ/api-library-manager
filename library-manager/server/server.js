@@ -12,22 +12,26 @@ app.get("/books", async (req, res) => {
     res.json(result.rows);
   } catch (error) {
     console.log("Database connection failed");
-    res.status(500).json({
-      mensagem: "Database Error",
+    res.status(500).json({mensagem: "Database Error",
     });
   }
 });
 
 // Post - Cadastrar Livros
 app.post("/books", async (req, res) => {
-  const { title, author } = req.body;
-  await client.query("INSERT INTO books (title, author) VALUES ($1, $2)", [
-    title,
-    author,
-  ]);
-  res.status(201).json({
-    mensagem: "Book successfully registered",
-  });
+  try {
+    const { title, author } = req.body;
+    await client.query("INSERT INTO books (title, author) VALUES ($1, $2)", [
+      title,
+      author,
+    ]);
+    res.status(201).json({
+      mensagem: "Book successfully registered",
+    });
+  } catch (error) {
+    console.log("Failed to register book", error);
+    res.status(500).json({ mensagem: "Database Error" });
+  }
 });
 
 // Put - Editar Livros
